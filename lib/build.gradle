@@ -6,6 +6,9 @@ apply from: '../scripts/bintray.gradle'
 
 logger.lifecycle("Using version ${version} for ${group}.${name}")
 
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
 auth0 {
     name "java jwt"
     repo "java-jwt"
