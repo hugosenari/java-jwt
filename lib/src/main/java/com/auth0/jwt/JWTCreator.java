@@ -58,8 +58,8 @@ public final class JWTCreator {
         private Map<String, Object> headerClaims;
 
         Builder() {
-            this.payloadClaims = new HashMap<>();
-            this.headerClaims = new HashMap<>();
+            this.payloadClaims = new HashMap<String, Object>();
+            this.headerClaims = new HashMap<String, Object>();
         }
 
         /**
@@ -69,7 +69,7 @@ public final class JWTCreator {
          * @return this same Builder instance.
          */
         public Builder withHeader(Map<String, Object> headerClaims) {
-            this.headerClaims = new HashMap<>(headerClaims);
+            this.headerClaims = new HashMap<String, Object>(headerClaims);
             return this;
         }
 

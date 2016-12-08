@@ -21,7 +21,7 @@ public class PayloadSerializer extends StdSerializer<ClaimsHolder> {
 
     @Override
     public void serialize(ClaimsHolder holder, JsonGenerator gen, SerializerProvider provider) throws IOException {
-        HashMap<Object, Object> safePayload = new HashMap<>();
+        HashMap<Object, Object> safePayload = new HashMap<Object, Object>();
         for (Map.Entry<String, Object> e : holder.getClaims().entrySet()) {
             switch (e.getKey()) {
                 case PublicClaims.AUDIENCE:

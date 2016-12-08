@@ -53,7 +53,7 @@ public final class JWTVerifier {
             }
 
             this.algorithm = algorithm;
-            this.claims = new HashMap<>();
+            this.claims = new HashMap<String, Object>();
             this.defaultLeeway = 0;
         }
 
