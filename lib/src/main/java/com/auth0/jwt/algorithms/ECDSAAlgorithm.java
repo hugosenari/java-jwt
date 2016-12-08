@@ -49,9 +49,15 @@ class ECDSAAlgorithm extends Algorithm {
             if (!valid) {
                 throw new SignatureVerificationException(this);
             }
-        } catch (NoSuchAlgorithmException | SignatureException | InvalidKeyException | IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             throw new SignatureVerificationException(this, e);
-        }
+        } catch (SignatureException e) {
+			throw new SignatureVerificationException(this, e);
+		} catch (InvalidKeyException e) {
+			throw new SignatureVerificationException(this, e);
+		} catch (NoSuchAlgorithmException e) {
+			throw new SignatureVerificationException(this, e);
+		}
     }
 
     @Override
@@ -61,9 +67,15 @@ class ECDSAAlgorithm extends Algorithm {
                 throw new IllegalArgumentException("The given ECKey is not a ECPrivateKey.");
             }
             return crypto.createSignatureFor(getDescription(), (PrivateKey) key, contentBytes);
-        } catch (NoSuchAlgorithmException | SignatureException | InvalidKeyException | IllegalArgumentException e) {
+        } catch (NoSuchAlgorithmException e) {
             throw new SignatureGenerationException(this, e);
-        }
+        } catch (IllegalArgumentException e) {
+			throw new SignatureGenerationException(this, e);
+		} catch (InvalidKeyException e) {
+			throw new SignatureGenerationException(this, e);
+		} catch (SignatureException e) {
+			throw new SignatureGenerationException(this, e);
+		}
     }
 
     private boolean isDERSignature(byte[] signature) {

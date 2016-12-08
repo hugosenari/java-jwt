@@ -48,18 +48,24 @@ class HMACAlgorithm extends Algorithm {
             if (!valid) {
                 throw new SignatureVerificationException(this);
             }
-        } catch (IllegalStateException | InvalidKeyException | NoSuchAlgorithmException e) {
+        } catch (InvalidKeyException e) {
             throw new SignatureVerificationException(this, e);
-        }
+        } catch (NoSuchAlgorithmException e) {
+			throw new SignatureVerificationException(this, e);
+		} catch (IllegalStateException e) {
+			throw new SignatureVerificationException(this, e);
+		}
     }
 
     @Override
     public byte[] sign(byte[] contentBytes) throws SignatureGenerationException {
         try {
             return crypto.createSignatureFor(getDescription(), secret, contentBytes);
-        } catch (NoSuchAlgorithmException | InvalidKeyException e) {
+        } catch (InvalidKeyException e) {
             throw new SignatureGenerationException(this, e);
-        }
+        } catch (NoSuchAlgorithmException e) {
+			throw new SignatureGenerationException(this, e);
+		}
     }
 
 }

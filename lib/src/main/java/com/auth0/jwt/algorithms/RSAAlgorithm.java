@@ -40,9 +40,15 @@ class RSAAlgorithm extends Algorithm {
             if (!valid) {
                 throw new SignatureVerificationException(this);
             }
-        } catch (NoSuchAlgorithmException | SignatureException | InvalidKeyException | IllegalArgumentException e) {
+        } catch (InvalidKeyException e) {
             throw new SignatureVerificationException(this, e);
-        }
+        } catch (IllegalArgumentException e) {
+			throw new SignatureVerificationException(this, e);
+		} catch (SignatureException e) {
+			throw new SignatureVerificationException(this, e);
+		} catch (NoSuchAlgorithmException e) {
+			throw new SignatureVerificationException(this, e);
+		}
     }
 
     @Override
@@ -52,8 +58,14 @@ class RSAAlgorithm extends Algorithm {
                 throw new IllegalArgumentException("The given RSAKey is not a RSAPrivateKey.");
             }
             return crypto.createSignatureFor(getDescription(), (RSAPrivateKey) key, contentBytes);
-        } catch (NoSuchAlgorithmException | SignatureException | InvalidKeyException | IllegalArgumentException e) {
+        } catch (SignatureException e) {
             throw new SignatureGenerationException(this, e);
-        }
+        } catch (IllegalArgumentException e) {
+			throw new SignatureGenerationException(this, e);
+		} catch (InvalidKeyException e) {
+			throw new SignatureGenerationException(this, e);
+		} catch (NoSuchAlgorithmException e) {
+			throw new SignatureGenerationException(this, e);
+		}
     }
 }
